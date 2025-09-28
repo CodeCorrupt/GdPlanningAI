@@ -152,6 +152,9 @@ func _execute_plan(delta: float):
 		elif action_status == Action.Status.SUCCESS:
 			# Progress to the next action.
 			_current_plan_step += 1
+			# If this was the last step and it was successful, mark the goal as satisfied.
+			if _current_plan_step == action_chain.size():
+				_current_goal.mark_goal_satisfied(self)
 
 	# Post actions.
 	if _current_plan_step == action_chain.size():  # We just finished, do post actions.
