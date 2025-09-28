@@ -18,10 +18,10 @@ var is_a_copy: bool
 
 
 ## Return the value of a requested property.
-func get_property(prop: String) -> Variant:
+func get_property(prop: String, default: Variant = null) -> Variant:
 	if prop in _blackboard:
 		return _blackboard[prop]
-	return null
+	return default
 
 
 ## Iterate over the list of GdPAI objects in the blackboard and return any in the requested group.
