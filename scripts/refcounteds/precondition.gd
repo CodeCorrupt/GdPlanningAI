@@ -47,6 +47,12 @@ func copy_for_simulation():
 #region
 # Agent property value comparsions.
 
+static func never_true() -> Precondition:
+	var precondition: Precondition = Precondition.new()
+	precondition.eval_func = func(blackboard: GdPAIBlackboard, world_state: GdPAIBlackboard):
+		return false
+	return precondition
+
 
 ## Instantiate a precondition that checks whether a property in the agent blackboard exists.
 static func agent_has_property(prop: String) -> Precondition:
