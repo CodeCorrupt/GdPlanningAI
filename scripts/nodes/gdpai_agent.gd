@@ -100,6 +100,25 @@ func _select_highest_reward_goal(self_actions: Array[Action], worldly_actions: A
 		test_plan.initialize(self, goals[idx], actions_with_worldly, max_recursion)
 
 		if test_plan.get_plan().size() > 0:  # This means a plan was created.
+			# Log goal selection
+			print("\n=== GOAL SELECTED ===")
+			print("  Agent: %s" % [entity.name if entity else "Unknown"])
+			print("  All Goal Rewards:")
+			for i in range(goals.size()):
+				var marker: String = " -> SELECTED" if i == idx else ""
+				print("    [%.1f] %s%s" % [rewards[i], goals[i].name, marker])
+			print("  Chosen Goal: %s (reward: %.1f)" % [goals[idx].name, max_reward])
+			print("  Plan Steps:")
+			var plan_actions: Array = test_plan.get_plan()
+			for i in range(plan_actions.size()):
+				var action_name: String = ""
+				if plan_actions[i].get_script():
+					action_name = plan_actions[i].get_script().get_global_name()
+				if action_name == "":
+					action_name = str(plan_actions[i])
+				print("    %d. %s" % [i + 1, action_name])
+			print("====================\n")
+
 			return_dict["goal"] = goals[idx]
 			return_dict["plan"] = test_plan
 			# For multithreading, we need to sync to main thread before exiting.
